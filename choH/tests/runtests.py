@@ -1,22 +1,17 @@
 
 from choH import choH
-from choH.utils.testutils import csv_column_to_list
+import numpy
+from pytest import approx
 
-
-def test_min_val_data_set_1() :
-    assert 5 == 5
-
-def test_min_val_data_set_2() :
-    assert 4 == 5
-
-def test_min_val_data_set_3() :
-    X = [float(x for x in csv_column_to_list("test.data.csv",0)]
+def test_size() :
+    numpy.random.seed(0)
+    X = [float(x) for x in list(numpy.random.normal(0,1,1000)) + list(numpy.random.normal(0.3,1,1000))]
     score = choH(X)
-    assert 5 == 5
-
-
-
+    assert len(score) == len(X) - 1
 
     
-
-# -12.162452676414286    
+def test_min_val() :
+    numpy.random.seed(0)
+    X = [float(x) for x in list(numpy.random.normal(0,1,1000)) + list(numpy.random.normal(0.3,1,1000))]
+    score = choH(X)
+    assert min(score) == approx(-29.437,abs=1e-3)
